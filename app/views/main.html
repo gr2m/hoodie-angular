@@ -1,0 +1,29 @@
+<div class="hero-unit">
+  <div class="well">
+    <h3>Stuff I need to do:</h3>
+    <ul class="taskList">
+    	<li ng-repeat="todo in todos" ng-bind="todo.title"></li>
+      <li ng-hide="todos.length > 0" class="default">Absolutely nothing.</li>
+    </ul>
+  </div>
+  <div class="addTask">
+    <form class="form-horizontal" ng-submit="createTodo()" >
+      <fieldset>
+        <legend>Add a task</legend>
+        <label>Task description</label>
+        <input class="desc" type="text" placeholder="A thing" ng-model="todo.title"/>
+        <button type="submit" class="submit btn">Submit</button>
+      </fieldset>
+    </form>
+  </div>
+  <div class="shareList">
+    <form class="form-horizontal" ng-submit="createEmail()">
+      <fieldset>
+        <legend>Share this list</legend>
+        <label>Mail it to someone!</label>
+        <input class="mail" type="email" placeholder="An e-mail address" ng-model="mail.text">
+        <button type="submit" class="submit btn">Send!</button>
+      </fieldset>
+    </form>
+  </div>
+</div>
