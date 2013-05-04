@@ -1,4 +1,4 @@
-# Hoodie + [AngularJS](http://angularjs.org)
+# [Hoodie](https://github.com/hoodiehq) + [AngularJS](http://angularjs.org)
 
 This is a ready to use template to create web apps using the awesome hoodie toolkit and the MVC framework AngularJS. Code on weekend, bill on monday =)
 It is also configured to use [Bower](https://github.com/bower/bower) as the js package manager.
