@@ -3,9 +3,11 @@
 This is a ready to use template to create web apps using the awesome hoodie toolkit and the MVC framework AngularJS. Code on weekend, bill on monday =)
 It is also configured to use [Bower](https://github.com/bower/bower) as the js package manager.
 
+
 ## Organization based on Yeoman Angular Generator
 
 There are a lot of files in this template in order to run the tests and to build the app. A smaller template can be used just to integrate hoodie and angular, but if you like to test you code as many angularjs users does, then you might enjoy this. This organization is based on the [yeoman angular generator](https://github.com/yeoman/generator-angular) and [angular-seed](https://github.com/angular/angular-seed). All the motivations behind this can be read from the original link, so don't blame me for something you don't like =)
+
 
 ### Modifications
 
@@ -35,21 +37,27 @@ This application is based on the original [hoodie demo](https://github.com/hoodi
 
 # Creating a new Hoodie App
 
+In order to create a new Hoodie App using this template you must do pretty much the same thing as if you wer creating
+using the default app template [my-first-hoodie](https://github.com/hoodiehq/my-first-hoodie).
+
+If you never created a Hoodi App before i recommend you to read the steps in the original link and after came back here.
+
 Prerequisits:
 
-* Node.JS
-
-  Either hit the big green “Install” button on http://nodejs.org
-
-  Or, if you are using Homebrew:
+* Node.JS and CouchDB ( same as my-first-hoodie )
 
   `$ brew install node`
-
-* CouchDB
-
   `$ brew install couchdb`
 
 (If any of these fail, run `brew update` to make sure your Homebrew version is up to date.)
+
+* Bower
+
+  `$ npm install -g bower`
+
+* Grunt
+
+  Grunt is used to run the build and test you app. It requires few steps to get installed, so i recommend follow the tutorial in the [oficial home-page](http://gruntjs.com/)
 
 Install with:
 
@@ -57,13 +65,15 @@ Install with:
     $ brew tap hoodiehq/homebrew-hoodie
     $ brew install hoodie
 
-Create your first Hoodie app:
+Once everything is running fine, then lest go create your first Hoodie app using this template:
 
-    $ hoodie new myappname
+    $ hoodie new myappname thiagofelix/hoodie-angular
 
 That created a folder "myappname". You are done. Start the app:
 
     $ cd myappname
+    $ bower install
+    $ grunt build
     $ hoodie start
 
 Now follow instructions, your browser should automatically open
@@ -80,146 +90,4 @@ you can use http://myapp.10.0.0.1.xip.io (assuming `10.0.0.1`)
 is your machines local ip address.
 
 
-## Modules
-
-To install a specific module, run (in your app's directory):
-
-    $ hoodie module install <name>
-
-where `<name>` is one of the Hoodie Modules.
-
-To uninstall use:
-
-    $ hoodie module uninstall <name>
-
-### List of Hoodie Modules
-
- * users (installed by default)
-  - user sign up
-  - user sign in
-  - passwort forget
-  - change username
-  - change password
-
- * shares
-  - make private objects public
-  - share private objects with other users or groups
-
-  ...
-
-
-## Troubleshooting
-
-Make sure that local-tld got installed correctly
-
-    $ NODE_PATH=`npm root -g`
-    $ open $NODE_PATH/local-tld
-
-Make sure, that paths have been set corretly
-
-    $ echo $NODE_PATH
-    $ cat ~/Library/LaunchAgents/ie.hood.local-tld-service.plist
-
-You should see `<string>/usr/local/lib/node_modules/local-tld/bin/local-tld-service</string>`,
-`/usr/local/lib/node_modules` being what `$ npm root -g` returns.
-
-If things do not work, try:
-
-    $ launchctl unload ~/Library/LaunchAgents/ie.hood.local-tld-service.plist
-    $ launchctl load -Fw ~/Library/LaunchAgents/ie.hood.local-tld-service.plist
-
-If things STILL don't work, try that (but don't tell Jan) ((I saw this! — Jan))
-
-    $ sudo $NODE_PATH/local-tld/bin/local-tld-troubleshoot
-
-**Vhosts**
-
-If you find Hoodie interfering with your vhosts, here's a temporary workaround:
-
-To get your vhosts back: `$ sudo ipfw flush`
-
-To get local-tld back: `$ npm install -g local-tld`
-
-To find out which state you're in: `$ sudo ipfw list`
-If this includes something like "00100 fwd 127.0.0.1,5999 tcp from any to me dst-port 80 in", local-tld is currently running and might be blocking your vhosts.
-
-
-## No-Mac
-
-`local-tld` is mac-only for now. If you are on another system, you can fake things until `local-tld` gains multi-platform support.
-
-For your app `myapp` add this to your `/etc/hosts` file:
-
-````
-127.0.0.1 myapp.dev api.myapp.dev couch.myapp.dev
-
-```
-
-Note: there is still some stuff missing for `npm start` on non-mac.
-
-
-## Deploy to Nodejitsu
-
-You need a Nodejitsu account and the `jitsu` tool installed.
-
-Create a new hoodie app:
-
-    $ hoodie new myapp
-
-Start app locally:
-
-    $ cd myapp
-    $ npm start
-
-Create a database:
-
-    $ jitsu database create couch myapp
-
-This prints out the URL for your database, something like:
-
-    http://nodejitsudb123456789.iriscouch.com:5984
-
-Go to:
-
-    http://nodejitsudb123456789.iriscouch.com:5984/_utils
-
-In the bottom right, click on "Fix This". Create a new user with the username `admin` and a password of your choice. Remember the password.
-
-Create the Nodejitsu app.
-
-    $ jitsu apps create
-
-Set your database URL as an environment variable:
-
-    $ jitsu env set COUCH_URL http://nodejitsudb1234567890.iriscouch.com:5984
-    $ jitsu env set HOODIE_ADMIN_PASS <yourpassword>
-
-`<yourpassword>` is the one you set up two steps ago.
-
-Deploy!
-
-    $ jitsu deploy
-
-(wait a minute)
-
-Go to: `http://myapp.jit.su`
-
-Boom.
-
-
-## Deploy dreamcode tl;dr
-
-    $ hoodie new myapp
-    $ cd myapp
-    $ npm start
-
-    $ hoodie remote add nodejitsu
-     - jitsu login
-     - jitsu database create couch myapp
-         - setup couchdb admin
-     - jitsu apps create
-     - jitsu env set COUCH_URL http://...
-     - jitsu env set COUCH_PASS <secret>
-
-    $ hoodie deploy
-     - jitsu deploy
+More information about Modules, Deployment and other things are avalliable in the [my-first-hoodie template](https://github.com/hoodiehq/my-first-hoodie).
