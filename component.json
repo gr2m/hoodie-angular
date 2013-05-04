@@ -9,6 +9,7 @@
     "angular-cookies": "~1.0.5",
     "angular-sanitize": "~1.0.5",
     "hoodie": "~0.1.21",
+    "jquery": "~1.9",
     "bootstrap": "~2.3.1"
   },
   "devDependencies": {
