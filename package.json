@@ -40,5 +40,6 @@
   ],
   "scripts": {
     "start": "node node_modules/hoodie-app/bin/start"
-  }
+  },
+  "repository": "github:gr2m/hoodie-angular"
 }
